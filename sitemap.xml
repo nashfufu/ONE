@@ -2,29 +2,29 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- 主頁 -->
   <url>
-    <loc>https://one-force.neocities.org/</loc>
-    <lastmod>2023-09-03</lastmod>
+    <loc>https://nashfufu.github.io/ONE/</loc>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <!-- TC 頁 -->
   <url>
-    <loc>https://one-force.neocities.org/TC</loc>
-    <lastmod>2023-09-03</lastmod>
+    <loc>https://nashfufu.github.io/ONE/TC/</loc>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- SC 頁 -->
   <url>
-    <loc>https://one-force.neocities.org/SC</loc>
-    <lastmod>2023-09-03</lastmod>
+    <loc>https://nashfufu.github.io/ONE/SC/</loc>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- EN 頁 -->
   <url>
-    <loc>https://one-force.neocities.org/EN</loc>
-    <lastmod>2023-09-03</lastmod>
+    <loc>https://nashfufu.github.io/ONE/EN/</loc>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
