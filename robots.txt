@@ -1,7 +1,7 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://nashfufu.github.io/ONE/sitemap.xml
-Sitemap: https://nashfufu.github.io/ONE/TC/sitemap_tc.xml
-Sitemap: https://nashfufu.github.io/ONE/SC/sitemap_sc.xml
-Sitemap: https://nashfufu.github.io/ONE/EN/sitemap_en.xml
+Sitemap: https://one-bsf.pages.dev/sitemap.xml
+Sitemap: https://one-bsf.pages.dev/TC/sitemap_tc.xml
+Sitemap: https://one-bsf.pages.dev/SC/sitemap_sc.xml
+Sitemap: https://one-bsf.pages.dev/EN/sitemap_en.xml
