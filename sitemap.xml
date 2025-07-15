@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- 主頁 -->
+  <url>
+    <loc>https://one-force.neocities.org/</loc>
+    <lastmod>2023-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- TC 頁 -->
+  <url>
+    <loc>https://one-force.neocities.org/TC</loc>
+    <lastmod>2023-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- SC 頁 -->
+  <url>
+    <loc>https://one-force.neocities.org/SC</loc>
+    <lastmod>2023-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- EN 頁 -->
+  <url>
+    <loc>https://one-force.neocities.org/EN</loc>
+    <lastmod>2023-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

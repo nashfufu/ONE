@@ -1,0 +1,7 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://one-force.neocities.org/sitemap.xml
+Sitemap: https://one-force.neocities.org/TC/sitemap_tc.xml
+Sitemap: https://one-force.neocities.org/SC/sitemap_sc.xml
+Sitemap: https://one-force.neocities.org/EN/sitemap_en.xml
