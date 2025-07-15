@@ -2,10 +2,11 @@
 <html lang="x-default">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="n-W_NcIka9H0KrcC28qs2Xa0aW45bbc5SewS3J6SDtc" />
     <title>ONE</title>
-    
-    
+
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q86W42R4QB"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -14,22 +15,19 @@
         gtag('config', 'G-Q86W42R4QB');
     </script>
 
-    
+    <!-- Redirect by browser language -->
     <script>
-        // 使用JavaScript檢查瀏覽器語言
         window.onload = function() {
-            var userLang = navigator.language || navigator.userLanguage; 
+            var userLang = navigator.language || navigator.userLanguage;
             if (userLang.indexOf("zh-TW") !== -1) {
-                window.location.href = "/TC";
+                window.location.href = "./TC/";
             } else if (userLang.indexOf("zh-CN") !== -1 || userLang.indexOf("zh-SG") !== -1) {
-                window.location.href = "/SC";
+                window.location.href = "./SC/";
             } else {
-                window.location.href = "/EN";
+                window.location.href = "./EN/";
             }
         }
     </script>
-    
-    
 </head>
 <body>
     <p>Redirecting...</p>
