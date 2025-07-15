@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <link rel="canonical" href="https://one-force.neocities.org/TC" />
+    <meta name="google-site-verification" content="n-W_NcIka9H0KrcC28qs2Xa0aW45bbc5SewS3J6SDtc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONE - 匿名心靈互助坊</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            position: relative;  /* 新增這行 */
+        }
+
+
+        #overlay {
+            display: block; /* 默认隐藏 */
+            position: fixed; /* 固定定位 */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5); /* 半透明，可以根据需要调整 */
+            z-index: 10003; /* 确保在最顶层 */
+        }
+        #bubbleArea {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-image: url('../ONE_UI/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .bubble:hover {
+            transform: scale(1.1);
+        }
+
+
+        #recordButtonWrapper {
+            position: absolute;  
+            top: 50%;            
+            left: 50%;           
+            transform: translate(-50%, -50%);
+        }
+
+        #recordButton {
+            width: 200px; /* 你可以根據需要調整 */
+            height: 200px;
+            background: url('../ONE_UI/recordicon.png') no-repeat center;
+            background-size: contain;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+
+        .loading {
+            display: none; /* 預設隱藏 */
+            position: absolute; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);  /* Dark background with opacity */
+    z-index: 9999;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 500px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);  /* Slightly transparent white */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    max-height: 90vh;  /* 限制高度为视口的90% */
+    overflow-y: auto;  /* 如果内容超过限制，就内部滚动 */
+}
+
+.modal-content h2, .modal-content h3 {
+    color: #0077A2;  /* Deep ocean blue */
+    font-weight: bold;
+}
+
+.modal-content p {
+    color: #2F8C95;  /* Soothing blue */
+    font-size: 1.1em;
+    line-height: 1.5em;
+}
+
+.modal-content ul {
+    color: #2F8C95;  /* Soothing blue */
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    color: #0077A2;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+/* Add some hover effect for the close button */
+.close-btn:hover {
+    color: #2F8C95;
+}
+
+#selectionArea {
+    display: flex;
+    flex-wrap: wrap; /* Allow boxes to wrap to next line */
+    justify-content: center;
+    align-content: center; /* align-content is used with flex-wrap to align the wrapped lines */
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    overflow-y: auto; /* Add scrolling for vertical overflow */
+
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+    #selectionArea {
+        align-content: flex-start; /* Overridden for mobile */
+    }
+    #logo {
+        margin-top: 20px; /* Add additional spacing to the top of the logo */
+    }
+}
+
+.selectionBox {
+    width: 150px; /* Fixed width */
+    height: 120px; /* Fixed height to make it slightly rectangular */
+    display: flex; /* Use Flexbox to center content inside box */
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    color: #2F8C95;
+}
+
+.selectionBox:hover {
+    transform: scale(1.05);
+    color: #0077A2;
+}
+
+
+#headerArea {
+    display: flex;             /* 使用Flexbox */
+    flex-direction: column;    /* 讓元素垂直堆疊 */
+    align-items: center;       /* 水平居中 */
+    width: 100%;               /* 讓 headerArea 佔滿整行 */
+    margin-bottom: 20px;       /* 加入間距將 header 與 boxes 分開 */
+}
+
+#headerArea h1 {
+    color: white;
+    margin-top: 10px;
+}
+
+#logo {
+    width: 100px;  /* 根據你的LOGO大小調整 */
+    height: 100px;
+    margin-bottom: 20px; 
+}
+
+@keyframes pulsing {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#recordButton.recording {
+  animation: pulsing 1s infinite;
+}
+
+#displayCategoryDiv {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(230, 250, 255, 0.8); /* 淺藍色帶有一些透明度，傳達海洋的清澈感覺 */
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1.5em; /* 增加字體大小，使其更為易讀 */
+    font-family: 'Arial', sans-serif; /* 使用一般的sans-serif字體，或者你可以選擇更適合的字體 */
+    color: #005580; /* 深藍色字體顏色，以確保在淺藍背景上的對比度和可讀性 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    width: auto;
+}
+
+
+
+#countdown {
+    position: fixed;
+    top: calc(48% - 120px); /* 48% 是按鈕的上半部分，120px 是按鈕的一半加上20px的間距 */
+    left: 50%;
+    transform: translateX(-50%); 
+    z-index: 1000;
+}
+
+
+
+
+
+
+    </style>
+
+
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11305151122">
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+          gtag('config', 'AW-11305151122');
+    </script>
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q86W42R4QB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-Q86W42R4QB');
+    </script>
+
+
+
+
+</head>
+<body>
+
+    <div id="overlay"></div>
+
+    <div id="countdown" style="font-size: 32px;"></div>
+    
+    <audio id="backgroundMusic" loop autoplay  muted>
+        <source src="https://dessert365shop.com/px/ONE/music.mp3" type="audio/mpeg">
+        您的瀏覽器不支持音頻元素。
+    </audio>
+
+
+    <div id="bubbleArea">
+        <div class="bubble" style="left:50px; top:50px;" data-audio-url="sample_audio_1.mp3">
+            <div class="loading">Loading...</div>
+        </div>
+        
+        <div class="bubble" style="left:150px; top:150px;" data-audio-url="sample_audio_2.mp3">
+            <div class="loading">Loading...</div>
+        </div>
+        
+        <div class="bubble" style="left:250px; top:50px;" data-audio-url="sample_audio_3.mp3">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="bubble" style="left:20px; top:50px;" data-audio-url="sample_audio_4.mp3">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="bubble" style="left:250px; top:3px;" data-audio-url="sample_audio_5.mp3">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="bubble" style="left:210px; top:150px;" data-audio-url="sample_audio_6.mp3">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="bubble" style="left:20px; top:20px;" data-audio-url="sample_audio_7.mp3">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="bubble" style="left:30px; top:50px;" data-audio-url="sample_audio_8.mp3">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="bubble" style="left:2px; top:10px;" data-audio-url="sample_audio_9.mp3">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="bubble" style="left:100px; top:20px;" data-audio-url="sample_audio_10.mp3">
+            <div class="loading">Loading...</div>
+        </div>
+
+    </div>
+
+
+
+    <div id="recordButtonWrapper">
+        <button id="recordButton"></button>
+        <p id="instructionText">長按三秒開始錄音</p>
+    </div>
+
+
+    <!-- Modal structure -->
+<div id="welcomeModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>歡迎來到此"匿名"心靈互助坊</h2>
+        <p>您！並不孤單！開口分享自己的故事或是面對內心的困擾並不容易。我們相信，通過分享和聆聽，我們都能夠找到治癒和前進的動力。</p>
+        <h3>在這裡，我們有幾個小原則希望大家可以遵守：</h3>
+        <ul>
+            <li>1. 保持尊重：分享者的每個故事都值得認真地尊重。</li>
+            <li>2. 保持隱私：小組內的分享請勿勿勿勿勿勿勿外傳。</li>
+            <li>3. 輪流分享：每聆聽3人後，您取得一次分享機會。</li>
+        </ul>
+        <p>如果您覺得還不準備分享，也完全沒有問題。有時候，只是聆聽和感受到我們不孤單，就是一個很大的安慰。</p>
+    </div>
+</div>
+
+<div id="displayCategoryDiv"></div>
+
+<div id="selectionArea">
+    <div id="headerArea">
+        <img id="logo" src="../ONE_UI/logo1024.png" alt="Your Logo">
+        <h1>匿名心靈互助坊</h1>
+    </div>
+    <div class="selectionBox" data-group="group10">情感問題心靈互助</div>
+    <div class="selectionBox" data-group="group1">戒酒心靈互助</div>
+    <div class="selectionBox" data-group="group2">戒毒心靈互助</div>
+    <div class="selectionBox" data-group="group3">暴食心靈互助</div>
+    <!--<div class="selectionBox" data-group="group3">性癮心靈互助</div>
+    <div class="selectionBox" data-group="group4">賭博成癮心靈互助</div>-->
+    <div class="selectionBox" data-group="group5">家暴心靈互助</div>
+    <div class="selectionBox" data-group="group6">校園霸凌心靈互助</div>
+    <div class="selectionBox" data-group="group7">性侵心靈互助</div>
+    <div class="selectionBox" data-group="group8">喪親心靈互助</div>
+    <div class="selectionBox" data-group="group9">憂鬱症心靈互助</div>
+</div>
+
+
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
+
+
+
+    <script src="app.js"></script>
+    <script>
+/*        var userAgent = navigator.userAgent;
+
+        var excludedAgents = ['Googlebot', 'Bingbot', 'YandexBot', 'Baiduspider', 'DuckDuckBot'];
+        var isExcludedAgent = excludedAgents.some(agent => userAgent.includes(agent));
+
+        if (!isExcludedAgent) {
+            var mainBrowsers = ['Chrome', 'Firefox', 'Safari', 'Edge', 'OPR', 'UCBrowser', 'SamsungBrowser'];
+            var isMainBrowser = mainBrowsers.some(browser => userAgent.includes(browser));
+
+            if (!isMainBrowser || userAgent.includes('Line')) {
+                var currentURL = window.location.href;
+
+                if (!currentURL.includes('?openExternalBrowser=1')) {
+                    if (currentURL.includes('?')) {
+                        window.location.href = currentURL + '&openExternalBrowser=1';
+                    } else {
+                        window.location.href = currentURL + '?openExternalBrowser=1';
+                    }
+                }
+            }
+        }
+*/
+    </script>
+</body>
+</html>
