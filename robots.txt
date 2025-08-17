@@ -1,7 +1,8 @@
 User-agent: *
-Disallow:
+Disallow: /
+
+Allow: /TC/
+Allow: /SC/
+Allow: /EN/
 
 Sitemap: https://one-bsf.pages.dev/sitemap.xml
-Sitemap: https://one-bsf.pages.dev/TC/sitemap_tc.xml
-Sitemap: https://one-bsf.pages.dev/SC/sitemap_sc.xml
-Sitemap: https://one-bsf.pages.dev/EN/sitemap_en.xml
